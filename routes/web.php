@@ -12,6 +12,7 @@ use App\Http\Controllers\backend\CollegeyearController;
 use App\Http\Controllers\backend\CollegequestionController;
 use App\Http\Controllers\backend\SolutionController;
 use App\Http\Controllers\backend\LabController;
+use App\Http\Controllers\backend\NotesController;
 use App\Http\Controllers\backend\ChapterController;
 /*
 |--------------------------------------------------------------------------
@@ -44,9 +45,14 @@ Route::resource('collegequestion',CollegequestionController::class);
 Route::resource('solution',SolutionController::class);
 Route::resource('lab',LabController::class);
 Route::resource('chapter',ChapterController::class);
+Route::resource('notes',NotesController::class);
     Route::get('chapter/getSubCategories/{id}', [ChapterController::class,'getSubCategories']);
     Route::get('chapter/{id}/getSubCategoriesedt/{ids}', [ChapterController::class,'getSubCategoriesedt']);
 
+    Route::get('notes/getSubCategories/{id}', [NotesController::class,'getSubCategories']);
+    Route::get('notes/getchapter/{id}', [NotesController::class,'getchapter']);
+    Route::get('notes/getchapteredt/{ids}', [NotesController::class,'getchapteredt']);
+    Route::get('notes/{id}/getSubCategoriesedt/{ids}', [NotesController::class,'getSubCategoriesedt']);
 
 });
 Route::get('admin/syllabus/getSubCategories/{id}', [SyllabusController::class,'getSubCategories']);
