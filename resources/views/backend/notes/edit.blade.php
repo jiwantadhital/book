@@ -28,7 +28,7 @@
                 <div class="form-group row">
                     {!! Form::label('sub_id', 'Subject: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
                     <div class="col-sm-10">
-                        <select class="form-control  formselect required"  placeholder="Select Sub Category" name="sub_id" id="subject">
+                        <select class="form-control  formselect required"  placeholder="Select Subject" name="sub_id" id="subject">
                             <option value="{{$data['row']->sub_id}}">{{$data['row']->Subject->title}}</option>
                         </select>
                         @error('sub_id')
@@ -40,8 +40,8 @@
                 <div class="form-group row">
                     {!! Form::label('chapter_id', 'Chapter: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
                     <div class="col-sm-10">
-                        <select class="form-control  formselect required"  placeholder="Select Sub Category" name="chapter_id" id="chapter">
-                            <option value="{{$data['row']->chapter_id}}">{{$data['row']->chapter_id}}</option>
+                        <select class="form-control  formselect required"  placeholder="Select Subject" name="chapter_id" id="chapter">
+                            <option value="{{$data['row']->chapter_id}}">{{$data['row']->Chapter->name}}</option>
                         </select>
                         @error('chapter_id')
                         <span class="text text-danger">{{$message}}</span>
@@ -104,12 +104,12 @@
     <script>
         $(document).ready(function () {
             $('#subject').on('change', function () {
-                let id = $(this).val();
+                let idss = $(this).val();
                 $('#chapter').empty();
                 $('#chapter').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                     type: 'get',
-                    url: 'getchapteredt/' +ids,
+                    url: 'getchapteredt/' +idss,
                     success: function (response) {
                         var response = JSON.parse(response);
                         console.log(response);

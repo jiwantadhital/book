@@ -24,9 +24,12 @@
                         </tr>
                         <tr>
                             <td>Chapter-Name</td>
-                            <td>{{$data['row']->name}}</td>
+                            <td>{{$data['row']->Chapter->name}}</td>
                         </tr>
-
+                        <tr>
+                            <td>Notes</td>
+                            <td>{{$data['row']->notes}}</td>
+                        </tr>
 
 
                         </tbody>
