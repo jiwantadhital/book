@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     return $request->user();
 });
-Route::post('/register', [\App\Http\Controllers\Api\AuthController::class,'register']);
-Route::post('/login', [\App\Http\Controllers\Api\AuthController::class,'login']);
+Route::post('/register', [\App\Http\Controllers\API\AuthController::class,'register']);
+Route::post('/login', [\App\Http\Controllers\API\AuthController::class,'login']);
+Route::get('/send-sms-notification', [\App\Http\Controllers\NotificationController::class, 'sendSmsNotificaition']);
+Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'updatePhone']);
+
 //Route::post('login', [\App\Http\Controllers\API\APIController::class, 'login']);
 //Route::get('notice',[\App\Http\Controllers\API\APIController::class,'notice']);
 //Route::Post('notice_save',[\App\Http\Controllers\API\APIController::class,'notice_save']);
