@@ -27,3 +27,10 @@ Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'update
 //Route::post('login', [\App\Http\Controllers\API\APIController::class, 'login']);
 //Route::get('notice',[\App\Http\Controllers\API\APIController::class,'notice']);
 //Route::Post('notice_save',[\App\Http\Controllers\API\APIController::class,'notice_save']);
+
+
+//subjects 
+Route::get('/subjects/showAll', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
+
+Route::group(['middleware'=>'auth:sanctum'],function(){
+});

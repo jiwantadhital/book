@@ -94,6 +94,20 @@
     </style>
 @endsection
 @section('jss')
+<script>
+        ClassicEditor
+            .create(document.querySelector('#summernotes'), {
+                ckfinder:{
+                    uploadUrl: '{{route('admin.ckeditor.upload').'?_token='.csrf_token()}}'
+                }
+            })
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
     <script>
         $(document).ready(function () {
             $('#semester').on('change', function () {

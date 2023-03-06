@@ -10,4 +10,5 @@ class semesters extends Model
     use HasFactory;
     protected $table='semesters';
     protected $fillable=['name'];
+    
 }

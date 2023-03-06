@@ -57,6 +57,13 @@ class NotesController extends BackendBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function uploadimage(Request $request)
+    {
+        $image = $request->file('upload');
+        $imageData = base64_encode(file_get_contents($image->getRealPath()));
+        $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
+        return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
+    }
     public function store(Request $request)
     {
 //        dd($request->all());

@@ -39,12 +39,13 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:10',
+            // 'phone' => 'required|unique:students',
         ]);
         // Return errors if validation error occur.
         if ($validator->fails()) {
             $errors = $validator->errors();
             return response()->json([
-                'message' => "Validation Failed"
+                'message' => $errors
             ], 400);
         }
         // Check if validation pass then create user and auth token. Return the auth token
@@ -53,6 +54,7 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone_verified'=> 0,
                 'password' => Hash::make($request->password)
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -62,13 +64,14 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'phone' => $request->phone
             ]);
-            // $this->sendSmsNotificaition($request->phone);
+            $this->sendSmsNotificaition($request->phone, $randomId);
             return response()->json([
             'token' => $token,
             'otp' => $randomId,
             'student' => $student->name,
             'message' => "successfull",
             'user_id' => $user->id,
+            'phone_verified' => $user->phone_verified,
             'user_email' => $user->email
             ]);
         }
@@ -79,16 +82,12 @@ class AuthController extends Controller
             }
         }
     
-    public function update(Request $request , $id) {
-        $data = YourModel::find($id);
-        $data->someColumn = $request->someColumn;
-        $data->save();
-    }
+    
     public function updatePhone(Request $request,$id)
     {
         //
         $verify=User::find($id);
-        $verify->phone_verified = $request->phone_verified;
+        $verify->phone_verified = 1;
         $verify->save();
         if($verify->phone_verified == 0){
             return response()->json([
@@ -97,15 +96,18 @@ class AuthController extends Controller
         
                 ]);
         }
-        else{
+        else if($verify->phone_verified == 1){
         return response()->json([
      
             'message' => "successfull",
+            'verify' => $request->phone_verified
     
             ]);
         }
 
     }
+
+    //login
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
@@ -115,11 +117,16 @@ class AuthController extends Controller
         }
         $user = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
+        $userde=auth()->user()->id;
+        $student = students::where('user_id', $userde)->first();
+        //  $this->sendSmsNotificaition($student->phone,$student->otp);
         return response()->json([
+            'otp' => $student->otp,
             'token' => $token,
             'message' => "successfull",
             'user_id' => auth()->user()->id,
             'user_name' => auth()->user()->name,
+            'phone_verified' => auth()->user()->phone_verified,
             'user_email' => auth()->user()->email
         ]);
     }

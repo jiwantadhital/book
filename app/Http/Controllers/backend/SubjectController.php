@@ -66,6 +66,10 @@ class SubjectController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
+    public function showAll(Request $request){
+        $data = subjects::with('Semester')->get();
+        return $data;
+    }
 
     /**
      * Display the specified resource.
