@@ -37,7 +37,7 @@
                     <td>{{$cat->Semester->name}}</td>
                     <td>{{$cat->Qyear->name}}</td>
                     <td>
-                        <img src="{{asset('uploads/images/syllabus/'.$cat->image)}}"  alt="" style="height: 100px; width: 100px; boarder:15px" >
+                        <img src="{{asset('uploads/images/questionBank/'.$cat->image)}}"  alt="" style="height: 100px; width: 100px; boarder:15px" >
                     </td>
 
 

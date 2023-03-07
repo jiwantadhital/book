@@ -30,8 +30,15 @@ Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'update
 
 
 //subjects 
-    Route::get('/subjects/showAll', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
-    Route::get('/semester/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAll']);
+Route::get('/subjects/showAll/{id}', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
+//syllabus
+Route::get('/syllabus/showAll/{id}', [\App\Http\Controllers\backend\SyllabusController::class, 'showAll']);
+//questionbanks
+Route::get('/question/showAll/{id}/{year_id}', [\App\Http\Controllers\backend\QuestionbankController::class, 'showAll']);
+//year
+Route::get('/questionyear/showAll', [\App\Http\Controllers\backend\QuestionyearController::class, 'showAll']);
+//semester
+Route::get('/semesters/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAll']);
 
 Route::group(['middleware'=>'auth:sanctum'],function(){
 });

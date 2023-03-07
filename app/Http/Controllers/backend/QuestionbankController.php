@@ -59,15 +59,31 @@ class QuestionbankController extends BackendBaseController
      */
     public function store(Request $request)
     {
-        $file = $request->file('image_file');
-        if ($request->hasFile("image_file")) {
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images/syllabus/'), $fileName);
-            $request->request->add(['image' => $fileName]);
-        }
+        // $file = $request->file('image_file');
+        // if ($request->hasFile("image_file")) {
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     $file->move(public_path('uploads/images/syllabus/'), $fileName);
+        //     $request->request->add(['image' => $fileName]);
+        // }
 
-        $data['row']=$this->model->create($request->all());
+        $data['row']=$request->all();
         if ($data['row']){
+             //for multiple image upload
+             $imageFiles = $request->file('product_image');
+             $imageArray['sem_id'] = $request->sem_id;
+             $imageArray['sub_id'] = $request->sub_id;
+             $imageArray['year_id'] = $request->year_id;
+
+ 
+             for ($i = 0; $i < count($imageFiles); $i++){
+                 $image      = $imageFiles[$i];
+                 $image_name = rand(6785, 9814).'_'.$image->getClientOriginalName();
+                  $image->move(public_path('uploads/images/questionBank/'), $image_name);
+                 // $image->move($this->image_path, $image_name);
+                 $imageArray['image'] = $image_name;
+                 $imageArray['status'] = 1;
+                 questionbanks::create($imageArray);
+             }
             request()->session()->flash('success',$this->panel . 'Created Successfully');
         }else{
             request()->session()->flash('error',$this->panel . 'Creation Failed');
@@ -76,7 +92,10 @@ class QuestionbankController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
-
+    public function showAll(Request $request, $id, $year_id){
+        $data = questionbanks::where('sub_id', $id,)->where('year_id', $year_id)->with('Qyear')->get();
+        return $data;
+    }
     /**
      * Display the specified resource.
      *

@@ -59,8 +59,7 @@ class SemesterController extends BackendBaseController
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-//        $request->request->add(['created_by' => auth()->user()->id]);
+
         $data['row']=$this->model->create($request->all());
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');
@@ -71,7 +70,10 @@ class SemesterController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
-
+    public function showAll(Request $request){
+        $data = semesters::all();
+        return $data;
+    }
     /**
      * Display the specified resource.
      *
