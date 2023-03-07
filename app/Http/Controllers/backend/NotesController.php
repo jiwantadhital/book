@@ -84,7 +84,10 @@ class NotesController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
-
+    public function showAll(Request $request, $id){
+        $data = notes::where('chapter_id', $id)->with('Chapter')->get();
+        return $data;
+    }
     /**
      * Display the specified resource.
      *

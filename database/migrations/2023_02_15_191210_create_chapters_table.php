@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->double('number');
             $table->unsignedBigInteger('sem_id');
             $table->foreign('sem_id')->references('id')->on('semesters');
             $table->unsignedBigInteger('sub_id');

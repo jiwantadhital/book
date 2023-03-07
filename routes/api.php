@@ -33,6 +33,10 @@ Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'update
 Route::get('/subjects/showAll/{id}', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
 //syllabus
 Route::get('/syllabus/showAll/{id}', [\App\Http\Controllers\backend\SyllabusController::class, 'showAll']);
+//chapters
+Route::get('/chapters/showAll/{id}', [\App\Http\Controllers\backend\ChapterController::class, 'showAll']);
+//notes
+Route::get('/notes/showAll/{id}', [\App\Http\Controllers\backend\NotesController::class, 'showAll']);
 //questionbanks
 Route::get('/question/showAll/{id}/{year_id}', [\App\Http\Controllers\backend\QuestionbankController::class, 'showAll']);
 //year

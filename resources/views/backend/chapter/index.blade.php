@@ -23,6 +23,7 @@
                     <th>Sn</th>
                     <th>Subject</th>
                     <th>Semester</th>
+                    <th>Chapter Number</th>
                     <th>Chapter Name</th>
                     <th>Action</th>
 
@@ -34,7 +35,7 @@
                     <td>{{$i+1}} </td>
                     <td>{{$cat->Subject->title}}</td>
                     <td>{{$cat->Semester->name}}</td>
-
+                    <td>{{$cat->number}}</td>
                     <td>{{$cat->name}}</td>
 
 
@@ -69,6 +70,7 @@
                     <th>Sn</th>
                     <th>Subject</th>
                     <th>Semester</th>
+                    <th>Chapter Number</th>
                     <th>Chapter Name</th>
                     <th>Action</th>
 

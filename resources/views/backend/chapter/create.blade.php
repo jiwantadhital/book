@@ -40,8 +40,25 @@
                     @enderror
                 </div>
             </div>
-
-            <div class="form-group row">
+            <div class="table-responsive">
+  <table class="table table-striped table-bordered" id="image_wrapper">
+    <tr>
+      <th>Chapter Name</th>
+      <th>Chapter Number</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+    <td><input type="text" name="chapter_title[]" class="form-control"/></td>
+      <td><input type="text" name="chapter_number[]" class="form-control"/></td>
+      <td>
+        <a class="btn btn-block btn-warning sa-warning remove_row "><i class="fa fa-trash"></i></a>
+      </td>
+    </tr>
+  </table>
+  <button class="btn btn-info" type="button" id="addMoreImage"
+          style="margin-bottom: 20px"> <i class="fa fa-plus"></i> Add</button>
+</div>
+            <!-- <div class="form-group row">
                 {!! Form::label('name','Name: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
                 <div class="col-sm-10">
                     {!! Form::text('name',null,[ 'class'=>'form-control','id'=>'name','name'=>'name']); !!}
@@ -50,7 +67,7 @@
                     @enderror
                 </div>
 
-            </div>
+            </div> -->
 
 
 
@@ -85,6 +102,36 @@
     </style>
 @endsection
 @section('jss')
+<script>
+     var y = 1;
+  var image_wrapper = $("#image_wrapper"); //Fields wrapper
+  var add_button_image = $("#addMoreImage"); //Add button ID
+  $(add_button_image).click(function (e) { //on add input button click
+    var max_fields = 15; //maximum input boxes allowed
+    e.preventDefault();
+    if (y < max_fields) { //max input box allowed
+      y++; //text box increment
+      var id = 'remove_row' + y;
+      $("#image_wrapper tr:last").after(
+        '<tr>'
+        + ' <td><input type="text" name="chapter_title[]" class="form-control" /></td>'
+        + ' <td><input type="text" name="chapter_number[]" class="form-control" /></td>'
+        + '<td>'
+        + '<a class="btn btn-block btn-warning sa-warning remove_row"> <i class="fa fa-trash"></i></a>'
+        + '</td>'
+        + '</tr>');
+
+    } else {
+      alert("Max field reached. " + max_fields + " allowed");
+    }
+  });
+
+  $(image_wrapper).on("click", ".remove_row", function (e) {
+    e.preventDefault();
+    $(this).parents("tr").remove();
+    y--;
+  });
+    </script>
     <script>
         $(document).ready(function () {
             $('#semester').on('change', function () {

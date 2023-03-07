@@ -57,15 +57,26 @@ class ChapterController extends BackendBaseController
      */
     public function store(Request $request)
     {
-        $file = $request->file('image_file');
-        if ($request->hasFile("image_file")) {
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images/lab/'), $fileName);
-            $request->request->add(['image' => $fileName]);
-        }
+        // $file = $request->file('image_file');
+        // if ($request->hasFile("image_file")) {
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     $file->move(public_path('uploads/images/lab/'), $fileName);
+        //     $request->request->add(['image' => $fileName]);
+        // }
 
-        $data['row']=$this->model->create($request->all());
+        $data['row']=$request->all();
         if ($data['row']){
+            $attribute_value = $request->input('chapter_title');
+            $attribute_id = $request->input('chapter_number');
+            $attributeArray['sem_id'] = $request->sem_id;
+            $attributeArray['sub_id'] = $request->sub_id;
+            $attributeArray['status'] = 1;
+
+            for ($i = 0; $i < count($attribute_id); $i++) {
+                $attributeArray['number'] = $attribute_id[$i];
+                $attributeArray['name'] = $attribute_value[$i];
+                chapters::create($attributeArray);
+            }
             request()->session()->flash('success',$this->panel . 'Created Successfully');
         }else{
             request()->session()->flash('error',$this->panel . 'Creation Failed');
@@ -89,7 +100,10 @@ class ChapterController extends BackendBaseController
 //        dd($data['row']);
         return view($this->__loadDataToView($this->view . 'view'),compact('data'));
     }
-
+    public function showAll(Request $request, $id){
+        $data = chapters::where('sub_id', $id)->get();
+        return $data;
+    }
     /**
      * Show the form for editing the specified resource.
      *

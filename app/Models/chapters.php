@@ -9,7 +9,7 @@ class chapters extends Model
 {
     use HasFactory;
     protected $table='chapters';
-    protected $fillable=['sem_id','sub_id','name'];
+    protected $fillable=['sem_id','sub_id','name','number'];
 
     public function Semester()
     {

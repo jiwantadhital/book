@@ -54,8 +54,16 @@ class SubjectController extends BackendBaseController
      */
     public function store(Request $request)
     {
-        $data['row']=$this->model->create($request->all());
+        $data['row']=$request->all();
         if ($data['row']){
+            $attribute_value = $request->input('chapter_title');
+            $attributeArray['sem_id'] = $request->sem_id;
+            $attributeArray['status'] = 1;
+
+            for ($i = 0; $i < count($attribute_value); $i++) {
+                $attributeArray['title'] = $attribute_value[$i];
+                subjects::create($attributeArray);
+            }
             request()->session()->flash('success',$this->panel . 'Created Successfully');
         }else{
             request()->session()->flash('error',$this->panel . 'Creation Failed');
