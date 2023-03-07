@@ -30,7 +30,8 @@ Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'update
 
 
 //subjects 
-Route::get('/subjects/showAll', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
+    Route::get('/subjects/showAll', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
+    Route::get('/semester/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAll']);
 
 Route::group(['middleware'=>'auth:sanctum'],function(){
 });

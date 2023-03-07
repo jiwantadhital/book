@@ -11,4 +11,8 @@ class semesters extends Model
     protected $table='semesters';
     protected $fillable=['name'];
     
+
+    function  subjects(){
+        return $this->hasMany(subjects::class);
+    }
 }

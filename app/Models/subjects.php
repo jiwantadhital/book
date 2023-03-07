@@ -15,5 +15,9 @@ class subjects extends Model
     {
         return $this->belongsTo(semesters::class, 'sem_id');
     }
+    public function semesters()
+    {
+        return $this->belongsTo(semesters::class);
+    }
 }
 

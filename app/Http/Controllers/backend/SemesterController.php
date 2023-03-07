@@ -34,6 +34,10 @@ class SemesterController extends BackendBaseController
 //        $data['rows'] = ->get();
         return view($this->__loadDataToView($this->view . 'index'),compact('data'));
     }
+    public function showAll(Request $request){
+        $data = semesters::all();
+        return $data;
+    }
     /**
      * Show the form for creating a new resource.
      *
