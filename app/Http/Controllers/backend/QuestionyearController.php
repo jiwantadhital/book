@@ -43,7 +43,10 @@ class QuestionyearController extends BackendBaseController
 
         return view($this->__loadDataToView($this->view . 'create'));
     }
-
+    public function showAll(Request $request){
+        $data = questionyears::all();
+        return $data;
+    }
     /**
      * Store a newly created resource in storage.
      *
