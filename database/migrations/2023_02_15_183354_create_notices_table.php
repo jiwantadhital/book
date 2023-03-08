@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('short_description');
+            $table->longtext('title');
+            $table->longtext('short_description');
             $table->string('description');
             $table->timestamps();
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\semesters;
 use App\Models\subjects;
+use App\Models\notices;
 use Illuminate\Http\Request;
 
 class SemesterController extends BackendBaseController
@@ -36,6 +37,10 @@ class SemesterController extends BackendBaseController
     }
     public function showAll(Request $request){
         $data = semesters::all();
+        return $data;
+    }
+    public function showAllNotices(Request $request){
+        $data = notices::all();
         return $data;
     }
     /**

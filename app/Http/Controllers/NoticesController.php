@@ -23,6 +23,10 @@ class NoticesController extends BackendBaseController
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+    public function showAll(Request $request){
+        $data = notices::all();
+        return $data;
+    }
     public function index()
     {
         $this->title = 'List';
@@ -64,7 +68,7 @@ class NoticesController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
-
+    
     /**
      * Display the specified resource.
      *

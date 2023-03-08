@@ -86,7 +86,11 @@ class NotesController extends BackendBaseController
     }
     public function showAll(Request $request, $id){
         $data = notes::where('chapter_id', $id)->with('Chapter')->get();
-        return $data;
+        if (count($data) > 0) {
+            return response()->json($data[0]);
+        } else {
+            return response()->json([]);
+        }
     }
     /**
      * Display the specified resource.

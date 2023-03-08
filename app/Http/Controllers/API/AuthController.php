@@ -64,7 +64,7 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'phone' => $request->phone
             ]);
-            $this->sendSmsNotificaition($request->phone, $randomId);
+            // $this->sendSmsNotificaition($request->phone, $randomId);
             return response()->json([
             'token' => $token,
             'otp' => $randomId,

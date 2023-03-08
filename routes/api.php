@@ -29,6 +29,10 @@ Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'update
 //Route::Post('notice_save',[\App\Http\Controllers\API\APIController::class,'notice_save']);
 
 
+//notices
+Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
+
+
 //subjects 
 Route::get('/subjects/showAll/{id}', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
 //syllabus
