@@ -52,14 +52,21 @@
 
             <div class="form-group row">
                 {!! Form::label('notes','Notes: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+              
                 <div class="col-sm-10">
-                    {!! Form::textarea('notes', '', [ 'class'=>'ckeditor form-control', 'placeholder'=>'Enter Description','id'=>'summernotes',]); !!}
-                    @error('notes')
+                <div id="toolbar-container"></div>
+
+<div id="editor"  class="form-control">
+    <p>This is the initial editor content.</p>
+</div>                    @error('notes')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
                 </div>
 
             </div>
+
+
+
 
 
 
@@ -94,20 +101,49 @@
     </style>
 @endsection
 @section('jss')
+
+
 <script>
-        ClassicEditor
-            .create(document.querySelector('#summernotes'), {
-                ckfinder:{
-                    uploadUrl: '{{route('admin.ckeditor.upload').'?_token='.csrf_token()}}'
-                }
-            })
-            .then(editor => {
-                console.log(editor);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
+    DecoupledEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+            const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+<!-- <script>
+    import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document/src/ckeditor';
+
+    DecoupledEditor
+        .create( document.querySelector( '#summernotes' ) )
+        .then( editor => {
+            const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+        // ClassicEditor
+        //     .create(document.querySelector('#summernotes'), {
+        //         ckfinder:{
+        //             uploadUrl: '{{route('admin.ckeditor.upload').'?_token='.csrf_token()}}'
+        //         }
+        //     })
+        //     .then(editor => {
+        //         console.log(editor);
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
+    </script> -->
+Write to Rahul Mandal
+
     <script>
         $(document).ready(function () {
             $('#semester').on('change', function () {
