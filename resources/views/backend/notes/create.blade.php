@@ -56,8 +56,7 @@
     <div name="notes" id="summernotes" class="document-editor__editable-container">
 
         <div id="summernotes" name="notes" class="document-editor__editable">
-        {!! Form::textarea('notes', '', [ 'class'=>'document-editor__editable', 'placeholder'=>'Enter Description','id'=>'summernotes',]); !!}
-
+        <textarea id="summernotes" name="notes">here</textarea>
         </div>
     </div>
 </div>
