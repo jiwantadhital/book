@@ -51,7 +51,7 @@ Route::resource('notes',NotesController::class);
 
     Route::get('notes/getSubCategories/{id}', [NotesController::class,'getSubCategories']);
     Route::get('notes/getchapter/{id}', [NotesController::class,'getchapter']);
-    Route::get('notes/getchapteredt/{ids}', [NotesController::class,'getchapteredt']);
+    Route::get('notes/{id}/getchapteredt/{idss}', [NotesController::class,'getchapteredt']);
     Route::get('notes/{id}/getSubCategoriesedt/{ids}', [NotesController::class,'getSubCategoriesedt']);
 
 });

@@ -175,11 +175,13 @@ class NotesController extends BackendBaseController
 
         echo json_encode(DB::table('chapters')->where('sub_id', $id)->get());
     }
-    public function getchapteredt(Request $request,$ids, $id){
+    public function getchapteredt(Request $request,$idss, $id){
+//        dd('ji');
 
         echo json_encode(DB::table('chapters')->where('sub_id', $id)->get());
 //        dd($data);
     }
+
     public function getSubCategoriesedt(Request $request, $ids,$id){
 
         echo     json_encode(DB::table('subjects')->where('sem_id', $id)->get());
