@@ -32,6 +32,7 @@ class AuthController extends Controller
             ]);
         }
     }
+   
     public function register(Request $request)
     {
         // Validate request data
@@ -82,7 +83,31 @@ class AuthController extends Controller
             }
         }
     
-    
+     //edit profile
+     public function editProfile(Request $request,$id){
+        try{
+            $verify = students::where('user_id','=',$id);
+            $verify->update($request->all());
+            return response()->json([
+     
+                'success' => true,        
+                ]);
+            }
+            catch(e){
+                return response()->json([
+     
+                    'success' => false,        
+                    ]);
+                }
+            }
+            
+    //getprofile
+    public function getProfile(Request $request,$id)
+{
+        $data = students::where('user_id','=',$id)->with('User')->get();
+        return $data;
+}
+     
     public function updatePhone(Request $request,$id)
     {
         //

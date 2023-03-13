@@ -16,7 +16,7 @@ class students extends Model
     }
     public function User()
     {
-        return $this->belongsTo(subjects::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function College()
     {

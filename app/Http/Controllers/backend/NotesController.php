@@ -66,14 +66,14 @@ class NotesController extends BackendBaseController
     }
     public function store(Request $request)
     {
-//        dd($request->all());
-        $file = $request->file('image_file');
-        if ($request->hasFile("image_file")) {
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images/lab/'), $fileName);
-            $request->request->add(['image' => $fileName]);
-        }
 
+        // $file = $request->file('image_file');
+        // if ($request->hasFile("image_file")) {
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     $file->move(public_path('uploads/images/lab/'), $fileName);
+        //     $request->request->add(['image' => $fileName]);
+        // }
+    //    dd($request->all());
         $data['row']=$this->model->create($request->all());
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');

@@ -24,6 +24,9 @@ Route::post('/login', [\App\Http\Controllers\API\AuthController::class,'login'])
 Route::get('/send-sms-notification', [\App\Http\Controllers\NotificationController::class, 'sendSmsNotificaition']);
 Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'updatePhone']);
 
+//update profile
+Route::put('/update/profile/{id}',[\App\Http\Controllers\API\AuthController::class,'editProfile']);
+
 //Route::post('login', [\App\Http\Controllers\API\APIController::class, 'login']);
 //Route::get('notice',[\App\Http\Controllers\API\APIController::class,'notice']);
 //Route::Post('notice_save',[\App\Http\Controllers\API\APIController::class,'notice_save']);
@@ -32,6 +35,8 @@ Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'update
 //notices
 Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
 
+//profile
+Route::get('/profile/getProfile/{id}', [\App\Http\Controllers\API\AuthController::class, 'getProfile']);
 
 //subjects 
 Route::get('/subjects/showAll/{id}', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
