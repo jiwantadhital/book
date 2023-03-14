@@ -104,8 +104,12 @@ class AuthController extends Controller
     //getprofile
     public function getProfile(Request $request,$id)
 {
-        $data = students::where('user_id','=',$id)->with('User')->get();
-        return $data;
+        $data = students::where('user_id','=',$id)->with('User')->with('Semester')->get();
+        if (count($data) > 0) {
+            return response()->json($data[0]);
+        } else {
+            return response()->json([]);
+        }
 }
      
     public function updatePhone(Request $request,$id)

@@ -76,6 +76,10 @@ class SubjectController extends BackendBaseController
         $data = subjects::where('sem_id', $id)->get();
         return $data;
     }
+    public function showSubjects(Request $request){
+        $data = subjects::with('Semester')->get();
+        return $data;
+    }
 
     /**
      * Display the specified resource.

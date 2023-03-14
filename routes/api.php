@@ -40,6 +40,8 @@ Route::get('/profile/getProfile/{id}', [\App\Http\Controllers\API\AuthController
 
 //subjects 
 Route::get('/subjects/showAll/{id}', [\App\Http\Controllers\backend\SubjectController::class, 'showAll']);
+
+Route::get('/subjects/showSubjects', [\App\Http\Controllers\backend\SubjectController::class, 'showSubjects']);
 //syllabus
 Route::get('/syllabus/showAll/{id}', [\App\Http\Controllers\backend\SyllabusController::class, 'showAll']);
 //chapters
