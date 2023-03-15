@@ -35,6 +35,10 @@ Route::put('/update/profile/{id}',[\App\Http\Controllers\API\AuthController::cla
 //notices
 Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
 
+//solutions
+Route::get('/solutions/showAll/{id}/{year_id}', [\App\Http\Controllers\backend\SolutionController::class, 'showAll']);
+
+
 //profile
 Route::get('/profile/getProfile/{id}', [\App\Http\Controllers\API\AuthController::class, 'getProfile']);
 
