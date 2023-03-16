@@ -50,10 +50,10 @@
                 </div>
             </div>
             <div class="form-group row">
-            <div name="notes" id="summernotes" class="document-editor">
+            <div class="document-editor">
        {!! Form::label('notes','Notes: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
     <div class="document-editor__toolbar"></div>
-    <div name="notes" id="summernotes" class="document-editor__editable-container">
+    <div class="document-editor__editable-container">
 
         <div id="summernotes" name="notes" class="document-editor__editable">
         <textarea id="summernotes" name="notes">here</textarea>
@@ -263,19 +263,19 @@ Preserve the relative scale, though. */
         } );
 </script>
 
-<!-- <script>
-    import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document/src/ckeditor';
+// <!-- <script>
+//     import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document/src/ckeditor';
 
-    DecoupledEditor
-        .create( document.querySelector( '#summernotes' ) )
-        .then( editor => {
-            const toolbarContainer = document.querySelector( '#toolbar-container' );
+//     DecoupledEditor
+//         .create( document.querySelector( '#summernotes' ) )
+//         .then( editor => {
+//             const toolbarContainer = document.querySelector( '#toolbar-container' );
 
-            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-        } )
-        .catch( error => {
-            console.error( error );
-        } );
+//             toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+//         } )
+//         .catch( error => {
+//             console.error( error );
+//         } );
         // ClassicEditor
         //     .create(document.querySelector('#summernotes'), {
         //         ckfinder:{
@@ -288,7 +288,7 @@ Preserve the relative scale, though. */
         //     .catch(error => {
         //         console.error(error);
         //     });
-    </script> -->
+    // </script> -->
 Write to Rahul Mandal
 
     <script>
