@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\students;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
 
 
 class AuthController extends Controller
@@ -33,6 +35,39 @@ class AuthController extends Controller
         }
     }
    
+
+//google
+public function requestTokenGoogle(Request $request) {
+    // // Getting the user from socialite using token from google
+    // $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
+
+    // // Getting or creating user from db
+    // $userFromDb = User::firstOrCreate(
+    //     ['email' => $user->getEmail()],
+    //     [
+    //         'email' => $request->email,
+    //         'email_verified_at' => now(),
+    //         'name' => $user->offsetGet('given_name'),
+    //         'name' => $request->name,
+    //         'phone_verified'=> 1,
+    //     ]
+    // );
+    $emailExists = User::where('email', $request->email)
+            ->exists();
+    if($emailExists==true){
+        return response(300);
+    }
+    else{
+        return response(200);
+    }
+
+    // // Returning response
+    // $token = $userFromDb->createToken('Laravel Sanctum Client')->plainTextToken;
+    // $response = ['token' => $token, 'message' => 'Google Login/Signup Successful'];
+    // return response($response, 200);
+}
+
+
     public function register(Request $request)
     {
         // Validate request data
