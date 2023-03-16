@@ -50,34 +50,19 @@
                 </div>
             </div>
             <div class="form-group row">
-            <div class="document-editor">
+            <textarea name="notes" id="summernote" cols="0" rows="0" hidden="true"></textarea>
+
+            <div  class="document-editor">
        {!! Form::label('notes','Notes: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
     <div class="document-editor__toolbar"></div>
     <div class="document-editor__editable-container">
 
-        <div id="summernotes" name="notes" class="document-editor__editable">
-        <textarea id="summernotes" name="notes">here</textarea>
+        <div id="summernotes" class="document-editor__editable">
         </div>
     </div>
 </div>
 </div>
-            <!-- <div class="form-group row"> -->
-                <!-- {!! Form::label('notes','Notes: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!} -->
-              
-                <!-- <div class="col-sm-10"> -->
-
-                <!-- <div id="toolbar-container"></div> -->
-                <!-- <div class="document-editor__editable-container"> -->
-
-                <!-- <div id="editor"> -->
-                <!-- </div>    -->
-<!-- </div> -->
-                <!-- @error('notes') -->
-                    <!-- <p class="text-danger">{{$message}}</p> -->
-                    <!-- @enderror -->
-                <!-- </div> -->
-
-            <!-- </div> -->
+</div>
 
 
 
@@ -89,6 +74,7 @@
         <div class="card-footer">
             <button type="submit" class="btn btn-primary" >Submit</button>
         </div>
+        {!! Form::close() !!}
 
     </div>
 </div>
@@ -255,41 +241,21 @@ Preserve the relative scale, though. */
         } )
         .then( editor => {
             const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
-
             toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+
+            editor.model.document.on( 'change:data', () => {
+                // Retrieve the updated content
+                const content = editor.getData();
+                
+                const textarea = document.getElementById('summernote');
+                textarea.value = content;
+            } );
         } )
         .catch( error => {
             console.error( error );
         } );
+        
 </script>
-
-// <!-- <script>
-//     import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document/src/ckeditor';
-
-//     DecoupledEditor
-//         .create( document.querySelector( '#summernotes' ) )
-//         .then( editor => {
-//             const toolbarContainer = document.querySelector( '#toolbar-container' );
-
-//             toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-//         } )
-//         .catch( error => {
-//             console.error( error );
-//         } );
-        // ClassicEditor
-        //     .create(document.querySelector('#summernotes'), {
-        //         ckfinder:{
-        //             uploadUrl: '{{route('admin.ckeditor.upload').'?_token='.csrf_token()}}'
-        //         }
-        //     })
-        //     .then(editor => {
-        //         console.log(editor);
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
-    // </script> -->
-Write to Rahul Mandal
 
     <script>
         $(document).ready(function () {

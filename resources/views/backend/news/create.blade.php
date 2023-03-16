@@ -16,7 +16,7 @@
                         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        {!! Form::open(['route' => $route .'store' , 'method' => 'post' , 'class' => 'form-horizontal']) !!}
+        {!! Form::open(['route' => $route .'store' , 'method' => 'post' , 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data']) !!}
         @csrf
 
         <div class="card-body">
@@ -40,6 +40,18 @@
                     <p class="text-danger">{{$message}}</p>
                     @enderror
                 </div>
+            </div>
+                <div class="form-group row">
+                {!! Form::label('image','Image: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+                <div class="col-sm-10">
+                    {!! Form::file('image', [ 'class'=>'form-control','id'=>'image_file','name'=>'image_file']); !!}
+                    @error('image')
+                    <p class="text-danger">{{$message}}</p>
+                    @enderror
+                </div>
+                @error('updated_by')
+                <p> error</p>
+                @enderror
             </div>
 
         </div>

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\students;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
 
 
 class AuthController extends Controller
@@ -32,6 +34,40 @@ class AuthController extends Controller
             ]);
         }
     }
+   
+
+//google
+public function requestTokenGoogle(Request $request) {
+    // // Getting the user from socialite using token from google
+    // $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
+
+    // // Getting or creating user from db
+    // $userFromDb = User::firstOrCreate(
+    //     ['email' => $user->getEmail()],
+    //     [
+    //         'email' => $request->email,
+    //         'email_verified_at' => now(),
+    //         'name' => $user->offsetGet('given_name'),
+    //         'name' => $request->name,
+    //         'phone_verified'=> 1,
+    //     ]
+    // );
+    $emailExists = User::where('email', $request->email)
+            ->exists();
+    if($emailExists==true){
+        return response(300);
+    }
+    else{
+        return response(200);
+    }
+
+    // // Returning response
+    // $token = $userFromDb->createToken('Laravel Sanctum Client')->plainTextToken;
+    // $response = ['token' => $token, 'message' => 'Google Login/Signup Successful'];
+    // return response($response, 200);
+}
+
+
     public function register(Request $request)
     {
         // Validate request data
@@ -82,7 +118,35 @@ class AuthController extends Controller
             }
         }
     
-    
+     //edit profile
+     public function editProfile(Request $request,$id){
+        try{
+            $verify = students::where('user_id','=',$id);
+            $verify->update($request->all());
+            return response()->json([
+     
+                'success' => true,        
+                ]);
+            }
+            catch(e){
+                return response()->json([
+     
+                    'success' => false,        
+                    ]);
+                }
+            }
+            
+    //getprofile
+    public function getProfile(Request $request,$id)
+{
+        $data = students::where('user_id','=',$id)->with('User')->with('Semester')->get();
+        if (count($data) > 0) {
+            return response()->json($data[0]);
+        } else {
+            return response()->json([]);
+        }
+}
+     
     public function updatePhone(Request $request,$id)
     {
         //

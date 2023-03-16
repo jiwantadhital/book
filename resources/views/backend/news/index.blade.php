@@ -34,7 +34,10 @@
                     <td>{{$cat->title}}</td>
 
                     <td>{!! $cat->description!!}</td>
-                    <td>Image</td>
+                    <td>
+                    <img src="{{asset('uploads/images/news/'.$cat->image)}}"  alt="" style="height: 100px; width: 100px; boarder:15px" >
+                    </td>
+                    
 
 
                     <td>   <a href="{{route($route .'show',$cat->id)}}" class="btn btn-sm btn-primary">

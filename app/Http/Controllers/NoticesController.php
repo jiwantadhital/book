@@ -56,8 +56,6 @@ class NoticesController extends BackendBaseController
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-//        $request->request->add(['created_by' => auth()->user()->id]);
         $data['row']=$this->model->create($request->all());
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');

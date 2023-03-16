@@ -65,7 +65,7 @@ class SolutionController extends BackendBaseController
              $imageFiles = $request->file('product_image');
              $imageArray['sem_id'] = $request->sem_id;
              $imageArray['sub_id'] = $request->sub_id;
-             $imageArray['year_id'] = $request->year_id;
+             $imageArray['questionyear_id'] = $request->questionyear_id;
 
  
              for ($i = 0; $i < count($imageFiles); $i++){
@@ -100,7 +100,10 @@ class SolutionController extends BackendBaseController
 //        dd($data['row']);
         return view($this->__loadDataToView($this->view . 'view'),compact('data'));
     }
-
+    public function showAll(Request $request, $id, $year_id){
+        $data = solutions::where('sub_id', $id,)->where('questionyear_id', $year_id)->with('Qyear')->get();
+        return $data;
+    }
     /**
      * Show the form for editing the specified resource.
      *

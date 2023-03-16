@@ -52,8 +52,12 @@ class NewsController extends BackendBaseController
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-//        $request->request->add(['created_by' => auth()->user()->id]);
+     $file = $request->file('image_file');
+        if ($request->hasFile("image_file")) {
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/images/news/'), $fileName);
+            $request->request->add(['image' => $fileName]);
+        }
         $data['row']=$this->model->create($request->all());
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');
@@ -64,7 +68,10 @@ class NewsController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
-
+    public function showAll(){
+        $data = news::all();
+        return $data;
+    }
     /**
      * Display the specified resource.
      *
