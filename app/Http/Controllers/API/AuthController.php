@@ -39,7 +39,7 @@ class AuthController extends Controller
 //google
 public function requestTokenGoogle(Request $request) {
     // // Getting the user from socialite using token from google
-    // $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
+    $usrdata = Socialite::driver('google')->stateless()->userFromToken($request->token);
 
     // // Getting or creating user from db
     // $userFromDb = User::firstOrCreate(
@@ -52,13 +52,46 @@ public function requestTokenGoogle(Request $request) {
     //         'phone_verified'=> 1,
     //     ]
     // );
-    $emailExists = User::where('email', $request->email)
+    $theEmail = $usrdata->email;
+    $theName = $usrdata->name;
+    $emailExists = User::where('email', $usrdata->email)
             ->exists();
     if($emailExists==true){
-        return response(300);
+   $user = User::where('email', $theEmail)->firstOrFail();
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json([
+            'token' => $token,
+            'message' => "successfull",
+            "time" => false,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'phone_verified' => $user->phone_verified,
+            'user_email' => $user->email
+        ]);
     }
     else{
-        return response(200);
+        $current_time = \Carbon\Carbon::now()->toDateTimeString();
+        $user = User::create([
+            'name' => $theName,
+            'email' => $theEmail,
+            'email_verified_at' => $current_time,
+            'phone_verified'=> 1
+        ]);
+        $token = $user->createToken('auth_token')->plainTextToken;
+        $student = students::create([
+            'user_id' => $user->id,
+            'name' => $user->name
+        ]);
+        // $this->sendSmsNotificaition($request->phone, $randomId);
+        return response()->json([
+        'token' => $token,
+        'message' => "successfull",
+        "time" => true,
+        'user_id' => $user->id,
+        'user_name' => $student->name,
+        'phone_verified' => $user->phone_verified,
+        'user_email' => $user->email
+        ]);
     }
 
     // // Returning response
