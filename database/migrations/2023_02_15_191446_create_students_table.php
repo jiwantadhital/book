@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('otp');
+            $table->double('otp')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->double('phone');
+            $table->double('phone')->nullable();
             $table->unsignedBigInteger('college_id')->nullable();
             $table->unsignedBigInteger('sem_id')->nullable();
             $table->text('image')->nullable();
