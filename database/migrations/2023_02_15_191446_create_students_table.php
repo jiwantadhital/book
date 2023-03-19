@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('phone')->nullable();
             $table->unsignedBigInteger('college_id')->nullable();
             $table->unsignedBigInteger('sem_id')->nullable();
-            $table->text('image')->nullable();
+            $table->longtext('image')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('college_id')->references('id')->on('colleges');
             $table->foreign('sem_id')->references('id')->on('semesters');
