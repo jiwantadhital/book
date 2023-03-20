@@ -358,22 +358,21 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
-                            Colleges
+                            Institution
                             <i class="fas fa-angle-left right"></i>
-
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
-                                {{--                            <a href="{{route('category.create')}}" class="nav-link">--}}
+{{--                            <a href="" class="nav-link">--}}
+                                <a href="{{route('admin.college.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Create</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            {{--                            <a href="{{route('category.index')}}" class="nav-link">--}}
-                            <a href="" class="nav-link">
+                            <a href="{{route('admin.college.index')}}" class="nav-link">
+{{--                            <a href="" class="nav-link">--}}
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>List</p>
                             </a>
@@ -392,15 +391,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
-                                {{--                            <a href="{{route('category.create')}}" class="nav-link">--}}
+                            <a href="{{route('admin.comments.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Create</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            {{--                            <a href="{{route('category.index')}}" class="nav-link">--}}
-                            <a href="" class="nav-link">
+                            <a href="{{route('admin.comments.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>List</p>
                             </a>

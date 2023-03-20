@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class coolleges_comments extends Model
 {
     use HasFactory;
+    protected $table='colleges_comments';
+    protected $fillable=['college_id','comment_id'];
 }
