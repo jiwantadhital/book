@@ -54,11 +54,12 @@ class SubjectController extends BackendBaseController
      */
     public function store(Request $request)
     {
+       // dd($request->all());
         $data['row']=$request->all();
         if ($data['row']){
             $attribute_value = $request->input('chapter_title');
             $attributeArray['sem_id'] = $request->sem_id;
-            $attributeArray['status'] = 1;
+           // $attributeArray['status'] = 1;
 
             for ($i = 0; $i < count($attribute_value); $i++) {
                 $attributeArray['title'] = $attribute_value[$i];

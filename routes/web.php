@@ -14,6 +14,8 @@ use App\Http\Controllers\backend\SolutionController;
 use App\Http\Controllers\backend\LabController;
 use App\Http\Controllers\backend\NotesController;
 use App\Http\Controllers\backend\ChapterController;
+use App\Http\Controllers\backend\CollegeController;
+use App\Http\Controllers\backend\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,6 +48,8 @@ Route::resource('solution',SolutionController::class);
 Route::resource('lab',LabController::class);
 Route::resource('chapter',ChapterController::class);
 Route::resource('notes',NotesController::class);
+Route::resource('college',CollegeController::class);
+Route::resource('comments',CommentController::class);
     Route::get('chapter/getSubCategories/{id}', [ChapterController::class,'getSubCategories']);
     Route::get('chapter/{id}/getSubCategoriesedt/{ids}', [ChapterController::class,'getSubCategoriesedt']);
 
