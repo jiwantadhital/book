@@ -38,8 +38,19 @@ Route::put('/update/profile/{id}',[\App\Http\Controllers\API\AuthController::cla
 //notices
 Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
 
+
+//colleges
+Route::get('/institutes/showAll', [\App\Http\Controllers\backend\CollegeController::class, 'showAll']);
+
+//college images
+Route::get('/collegeImages/showAll/{id}', [\App\Http\Controllers\backend\CollegeController::class, 'imageShowAll']);
+//comment
+Route::get('/comments/showAll/{id}', [\App\Http\Controllers\backend\CommentController::class, 'showAll']);
+
 //solutions
 Route::get('/solutions/showAll/{id}/{year_id}', [\App\Http\Controllers\backend\SolutionController::class, 'showAll']);
+//comments
+Route::post('/getComment',[\App\Http\Controllers\backend\CommentController::class,'getComment']);
 
 
 //profile

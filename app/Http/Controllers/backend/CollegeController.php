@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\colleges;
+use App\Models\college_images;
 use Illuminate\Http\Request;
 
 class CollegeController extends BackendBaseController
@@ -49,14 +50,26 @@ class CollegeController extends BackendBaseController
      */
     public function store(Request $request)
     {
-//        $file = $request->file('image_file');
-//        if ($request->hasFile("image_file")) {
-//            $fileName = time() . '_' . $file->getClientOriginalName();
-//            $file->move(public_path('uploads/images/collegequestion/'), $fileName);
-//            $request->request->add(['image' => $fileName]);
-//        }
+       $file = $request->file('image_file');
+       if ($request->hasFile("image_file")) {
+           $fileName = time() . '_' . $file->getClientOriginalName();
+           $file->move(public_path('uploads/images/colleges/'), $fileName);
+           $request->request->add(['logo' => $fileName]);
+       }
 
         $data['row']=$this->model->create($request->all());
+        //for multiple image upload
+        $imageFiles = $request->file('product_image');
+        $imageArray['college_id'] = $data['row']->id;
+
+        for ($i = 0; $i < count($imageFiles); $i++){
+            $image      = $imageFiles[$i];
+            $image_name = rand(6785, 9814).'_'.$image->getClientOriginalName();
+             $image->move(public_path('uploads/images/colleges/images/'), $image_name);
+            $imageArray['image'] = $image_name;
+            $imageArray['status'] = 1;
+            college_images::create($imageArray);
+        }
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');
         }else{
@@ -66,7 +79,14 @@ class CollegeController extends BackendBaseController
         return redirect()->route($this->__loadDataToView($this->route . 'index'));
 
     }
-
+    public function showAll(){
+        $data = colleges::all();
+        return $data;
+    }
+    public function imageShowAll($id){
+        $data = college_images::where('college_id',$id)->get();
+        return $data;
+    } 
     /**
      * Display the specified resource.
      *

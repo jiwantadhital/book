@@ -24,7 +24,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Details</th>
-                    <th>Image</th>
+                    <th>Logo</th>
                     <th>Action</th>
 
                 </tr>
@@ -37,8 +37,7 @@
                     <td>{{$cat->description}}</td>
                     <td>{{$cat->details}}</td>
                     <td>
-                        Image not added yet
-{{--                        <img src="{{asset('uploads/images/collegequestion/'.$cat->image)}}"  alt="" style="height: 100px; width: 100px; boarder:15px" >--}}
+                   <img src="{{asset('uploads/images/colleges/'.$cat->logo)}}"  alt="" style="height: 100px; width: 100px; boarder:15px" >
                     </td>
 
 
@@ -73,7 +72,7 @@
                     <th>Subject</th>
                     <th>Semester</th>
                     <th>Question Year</th>
-                    <th>Image</th>
+                    <th>Logo</th>
                     <th>Action</th>
 
                 </tr>

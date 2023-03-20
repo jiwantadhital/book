@@ -50,6 +50,32 @@ class CommentController extends BackendBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function getComment(Request $request){
+        try{
+        $comments = comments::create([
+            'comments_ratting' => $request->rating,
+            'description' => $request->desc,
+            'user_id' => $request->id,
+            'student_id' => $request->student_id,
+            'college_id' => $request->college_id
+        ]);
+        return response()->json([
+            'messgae' => true
+            ]);
+    }catch(e){
+        return response()->json([
+            'messgae' => false
+            ]);
+    }
+
+    }
+
+    public function showAll($id){
+        $data = comments::where('college_id',$id)->with('Student')->sortByDesc(function ($data) {
+            return Carbon::parse($data['Timestamp'])->timestamp;
+        })->get();
+        return $data;
+    }
     public function store(Request $request)
     {
         $request->request->add(['user_id' => auth()->user()->id]);
