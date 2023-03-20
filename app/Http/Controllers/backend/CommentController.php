@@ -71,9 +71,7 @@ class CommentController extends BackendBaseController
     }
 
     public function showAll($id){
-        $data = comments::where('college_id',$id)->with('Student')->sortByDesc(function ($data) {
-            return Carbon::parse($data['Timestamp'])->timestamp;
-        })->get();
+        $data = comments::where('college_id',$id)->with('Student')->get();
         return $data;
     }
     public function store(Request $request)
