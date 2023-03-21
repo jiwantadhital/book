@@ -33,6 +33,8 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['prefix'=>'/admin','as'=>'admin.'],function(){
     Route::post('upload', [NotesController::class,'uploadimage'])->name('ckeditor.upload');
+    Route::post('upload', [NoticesController::class,'uploadimage'])->name('ckeditor.upload');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('.home');
 Route::resource('notice',NoticesController::class);

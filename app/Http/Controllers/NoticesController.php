@@ -54,9 +54,41 @@ class NoticesController extends BackendBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+    public function uploadimage(Request $request)
+    {
+        $image = $request->file('upload');
+        $imageData = base64_encode(file_get_contents($image->getRealPath()));
+        $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
+        return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
+    }
     public function store(Request $request)
     {
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $data = [
+            "to" => "/topics/all",
+            "priority" => "high",
+            'notification' => [
+                'title' => $request->title,
+                'body' => $request->short_description,
+            ],
+        ];
+        $fields = json_encode ($data);
+        $headers = array (
+            'Authorization: key=' . "AAAA9p_4Hi4:APA91bEAkWt7B1JbKmfX9X3om1kNSzW9mLTf1tlUU7qmtfkXopJCrz5490We6cqT0lhDcUMv67pAu3bUS8zE27Uwuxrp5sVLZECAcumjabKFGW321qnO-WRF-nbnkyHcp_NGXeU6SFj3",
+            'Content-Type: application/json'
+        );
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+        $result = curl_exec ( $ch );
+        //var_dump($result);
+        curl_close ( $ch );
         $data['row']=$this->model->create($request->all());
+
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');
         }else{
