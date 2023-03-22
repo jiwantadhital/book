@@ -71,7 +71,7 @@ class CommentController extends BackendBaseController
     }
 
     public function showAll($id){
-        $data = comments::where('college_id',$id)->with('Student')->get();
+        $data = comments::where('college_id',$id)->with('Student')->orderBy('created_at', 'DESC')->get();
         return $data;
     }
     public function store(Request $request)

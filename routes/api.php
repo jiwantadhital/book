@@ -51,7 +51,8 @@ Route::get('/comments/showAll/{id}', [\App\Http\Controllers\backend\CommentContr
 Route::get('/solutions/showAll/{id}/{year_id}', [\App\Http\Controllers\backend\SolutionController::class, 'showAll']);
 //comments
 Route::post('/getComment',[\App\Http\Controllers\backend\CommentController::class,'getComment']);
-
+//problems
+// Route::post('/getComment',[\App\Http\Controllers\backend\CommentController::class,'getComment']);
 
 //profile
 Route::get('/profile/getProfile/{id}', [\App\Http\Controllers\API\AuthController::class, 'getProfile']);

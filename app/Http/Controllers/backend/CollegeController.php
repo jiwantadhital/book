@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\colleges;
+use App\Models\problems;
 use App\Models\college_images;
 use Illuminate\Http\Request;
 
@@ -93,6 +94,24 @@ class CollegeController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     public function problems(Request $request){
+        try{
+        $problem = problems::create([
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+        return response()->json([
+            'message' => true,
+            ]);
+    }
+    catch(e){
+        return response()->json([
+            'message' => false,
+            ]);
+    }
+     }
     public function show($id)
     {
 
