@@ -55,7 +55,8 @@ class NewsController extends BackendBaseController
      $file = $request->file('image_file');
         if ($request->hasFile("image_file")) {
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images/news/'), $fileName);
+            $img = \Image::make($file);
+            $img->save(public_path('uploads/images/news/') . $fileName,23);
             $request->request->add(['image' => $fileName]);
         }
         $data['row']=$this->model->create($request->all());
@@ -69,7 +70,8 @@ class NewsController extends BackendBaseController
 
     }
     public function showAll(){
-        $data = news::all();
+        
+        $data = news::paginate(4);
         return $data;
     }
     /**

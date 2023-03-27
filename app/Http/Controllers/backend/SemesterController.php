@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-
+use Carbon\Carbon;
 use App\Models\semesters;
 use App\Models\subjects;
 use App\Models\notices;
@@ -40,7 +40,22 @@ class SemesterController extends BackendBaseController
         return $data;
     }
     public function showAllNotices(Request $request){
-        $data = notices::all();
+        $data = notices::orderBy('created_at', 'DESC')->paginate(5);
+        return $data;
+    }
+    public function todayNotices(Request $request){
+        $data = notices::whereDate('created_at', Carbon::today())->orderBy('created_at', 'DESC')->get();
+        return $data;
+    }
+
+    //this week
+    public function thisWeek(Request $request){
+        $now = Carbon::now();
+
+        $data = notices::whereBetween("created_at", [
+            $now->startOfWeek()->format('Y-m-d'), //This will return date in format like this: 2022-01-10
+            $now->endOfWeek()->format('Y-m-d')
+         ])->orderBy('created_at', 'DESC')->get();
         return $data;
     }
     /**

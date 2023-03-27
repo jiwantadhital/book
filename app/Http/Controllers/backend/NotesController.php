@@ -10,6 +10,7 @@ use App\Models\subjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class NotesController extends BackendBaseController
 {
     protected $route ='admin.notes.';
@@ -60,7 +61,11 @@ class NotesController extends BackendBaseController
     public function uploadimage(Request $request)
     {
         $image = $request->file('upload');
-        $imageData = base64_encode(file_get_contents($image->getRealPath()));
+        $imga = \Image::make($image);
+        ob_start();
+        $img = $imga->encode(null, 10);
+        $imageData = ob_get_clean();
+        $imageData = base64_encode($img);
         $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
         return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
     }

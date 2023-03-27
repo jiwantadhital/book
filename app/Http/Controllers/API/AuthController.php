@@ -156,6 +156,9 @@ public function requestTokenGoogle(Request $request) {
         try{
             $verify = students::where('user_id','=',$id);
             $verify->update($request->all());
+            $verif=User::find($id);
+            $verif->name = $request->name;
+            $verif->save();
             return response()->json([
      
                 'success' => true,        

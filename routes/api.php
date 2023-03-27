@@ -38,6 +38,10 @@ Route::put('/update/profile/{id}',[\App\Http\Controllers\API\AuthController::cla
 //notices
 Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
 
+Route::get('/notices/today', [\App\Http\Controllers\backend\SemesterController::class, 'todayNotices']);
+
+Route::get('/notices/thisWeek', [\App\Http\Controllers\backend\SemesterController::class, 'thisWeek']);
+
 
 //colleges
 Route::get('/institutes/showAll', [\App\Http\Controllers\backend\CollegeController::class, 'showAll']);

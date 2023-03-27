@@ -38,7 +38,7 @@
                     <td>{{$cat->Subject->title}}</td>
 
                     <td>{{$cat->Chapter->name}}</td>
-                    <td>{{$cat->notes}}</td>
+                    <td>{!!$cat->notes!!}</td>
 
 {{--                    <td>{{$cat->name}}</td>--}}
 
