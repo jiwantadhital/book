@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('sem_id');
             $table->foreign('sem_id')->references('id')->on('semesters');
             $table->unsignedBigInteger('sub_id');

@@ -9,7 +9,7 @@ class notes extends Model
 {
     use HasFactory;
     protected $table='notes';
-    protected $fillable=['notes','sem_id','sub_id','chapter_id'];
+    protected $fillable=['notes','image','sem_id','sub_id','chapter_id'];
 
 
     public function Semester()

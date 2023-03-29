@@ -71,7 +71,7 @@ class NewsController extends BackendBaseController
     }
     public function showAll(){
         
-        $data = news::paginate(4);
+        $data = news::paginate(10);
         return $data;
     }
     /**

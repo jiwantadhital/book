@@ -61,24 +61,54 @@ class NotesController extends BackendBaseController
     public function uploadimage(Request $request)
     {
         $image = $request->file('upload');
-        $imga = \Image::make($image);
+        $size = $image->getSize();
+        if($size>200000){
+            $imga = \Image::make($image);
         ob_start();
         $img = $imga->encode(null, 10);
         $imageData = ob_get_clean();
         $imageData = base64_encode($img);
         $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
         return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
+
+        }
+        else if($size < 40000){
+        $imga = \Image::make($image);
+        ob_start();
+        $img = $imga->encode(null, 90);
+        $imageData = ob_get_clean();
+        $imageData = base64_encode($img);
+        $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
+        return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
+    }
+    else if($size > 500000){
+        $imga = \Image::make($image);
+        ob_start();
+        $img = $imga->encode(null, 0.4);
+        $imageData = ob_get_clean();
+        $imageData = base64_encode($img);
+        $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
+        return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
+    }
+    else{
+        $imga = \Image::make($image);
+        ob_start();
+        $img = $imga->encode(null, 50);
+        $imageData = ob_get_clean();
+        $imageData = base64_encode($img);
+        $url = 'data:'.$image->getClientMimeType().';base64,'.$imageData;
+        return response()->json(['fileName' => $image->getClientOriginalName(), 'uploaded' => 1, 'url' => $url]);
+    }
     }
     public function store(Request $request)
     {
 
-        // $file = $request->file('image_file');
-        // if ($request->hasFile("image_file")) {
-        //     $fileName = time() . '_' . $file->getClientOriginalName();
-        //     $file->move(public_path('uploads/images/lab/'), $fileName);
-        //     $request->request->add(['image' => $fileName]);
-        // }
-    //    dd($request->all());
+        $file = $request->file('image_file');
+        if ($request->hasFile("image_file")) {
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/images/lab/pdf/'), $fileName);
+            $request->request->add(['image' => $fileName]);
+        }
         $data['row']=$this->model->create($request->all());
         if ($data['row']){
             request()->session()->flash('success',$this->panel . 'Created Successfully');

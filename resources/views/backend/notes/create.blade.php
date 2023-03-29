@@ -50,6 +50,18 @@
                 </div>
             </div>
             <div class="form-group row">
+                {!! Form::label('image','File: <span ></span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+                <div class="col-sm-10">
+                    {!! Form::file('image', [ 'class'=>'form-control','id'=>'image_file','name'=>'image_file']); !!}
+                    @error('image')
+                    <p class="text-danger">{{$message}}</p>
+                    @enderror
+                </div>
+                @error('updated_by')
+                <p> error</p>
+                @enderror
+            </div>
+            <div class="form-group row">
             <textarea name="notes" id="summernote" cols="0" rows="0" hidden="true"></textarea>
 
             <div  class="document-editor">
@@ -60,6 +72,7 @@
         <div id="summernotes" class="document-editor__editable">
         </div>
     </div>
+  
 </div>
 </div>
 </div>
