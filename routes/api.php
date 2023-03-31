@@ -33,6 +33,8 @@ Route::put('/update/profile/{id}',[\App\Http\Controllers\API\AuthController::cla
 //Route::post('login', [\App\Http\Controllers\API\APIController::class, 'login']);
 //Route::get('notice',[\App\Http\Controllers\API\APIController::class,'notice']);
 //Route::Post('notice_save',[\App\Http\Controllers\API\APIController::class,'notice_save']);
+//email
+Route::get('/sendemail', [\App\Http\Controllers\API\AuthController::class, 'basic_email']);
 
 
 //notices

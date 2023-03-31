@@ -67,7 +67,7 @@ class NoticesController extends BackendBaseController
         $url = 'https://fcm.googleapis.com/fcm/send';
         $data = [
             "to" => "/topics/all",
-            "priority" => "high",
+            "priority" => "high", 
             'notification' => [
                 'title' => $request->title,
                 'body' => $request->short_description,

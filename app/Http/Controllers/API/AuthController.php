@@ -10,7 +10,8 @@ use App\Models\User;
 use App\Models\students;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-
+use App\Mail\OrderConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 
 class AuthController extends Controller
@@ -35,23 +36,26 @@ class AuthController extends Controller
         }
     }
    
-
+    public function basic_email($otp, $emai) {
+        try{
+        Mail::raw("your otp is $otp", function($message) use ($emai){
+            $message->to($emai)
+                    ->subject("Your otp code");
+        });
+        return response()->json([
+            'message' => "Sucessful"
+        ]);
+    }
+    catch(Exception $e){
+        return response()->json([
+            'message' => "Failed"
+        ]);
+    }
+     }
 //google
 public function requestTokenGoogle(Request $request) {
     // // Getting the user from socialite using token from google
     $usrdata = Socialite::driver('google')->stateless()->userFromToken($request->token);
-
-    // // Getting or creating user from db
-    // $userFromDb = User::firstOrCreate(
-    //     ['email' => $user->getEmail()],
-    //     [
-    //         'email' => $request->email,
-    //         'email_verified_at' => now(),
-    //         'name' => $user->offsetGet('given_name'),
-    //         'name' => $request->name,
-    //         'phone_verified'=> 1,
-    //     ]
-    // );
     $theEmail = $usrdata->email;
     $theName = $usrdata->name;
     $emailExists = User::where('email', $usrdata->email)
@@ -133,7 +137,9 @@ public function requestTokenGoogle(Request $request) {
                 'name' => $user->name,
                 'phone' => $request->phone
             ]);
-            // $this->sendSmsNotificaition($request->phone, $randomId);
+                    //  $this->sendSmsNotificaition($student->phone,$student->otp);
+            
+            $this->basic_email($randomId,$request->email);
             return response()->json([
             'token' => $token,
             'otp' => $randomId,
@@ -210,6 +216,7 @@ public function requestTokenGoogle(Request $request) {
     //login
     public function login(Request $request)
     {
+
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid login details'
@@ -219,7 +226,12 @@ public function requestTokenGoogle(Request $request) {
         $token = $user->createToken('auth_token')->plainTextToken;
         $userde=auth()->user()->id;
         $student = students::where('user_id', $userde)->first();
-        //  $this->sendSmsNotificaition($student->phone,$student->otp);
+        if(auth()->user()->phone_verified == 0){
+            $this->basic_email($student->otp,auth()->user()->email);
+    }
+    else{
+
+    }
         return response()->json([
             'otp' => $student->otp,
             'token' => $token,
@@ -229,5 +241,6 @@ public function requestTokenGoogle(Request $request) {
             'phone_verified' => auth()->user()->phone_verified,
             'user_email' => auth()->user()->email
         ]);
+    
     }
 }
