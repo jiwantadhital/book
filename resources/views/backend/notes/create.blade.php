@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- left column -->
-                <div class="col-sm-6 col-md-9 col-lg-9">
+                <div class="col-sm-9 col-md-9 col-lg-9">
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
