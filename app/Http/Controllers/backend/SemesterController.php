@@ -40,7 +40,7 @@ class SemesterController extends BackendBaseController
         return $data;
     }
     public function showAllNotices(Request $request){
-        $data = notices::orderBy('created_at', 'DESC')->paginate(5);
+        $data = notices::orderBy('created_at', 'DESC')->paginate(8);
         return $data;
     }
     public function todayNotices(Request $request){

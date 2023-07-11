@@ -17,7 +17,8 @@
                         <div class="inner">
 {{--                            <h3>{{$data['product']}}</h3>--}}
 
-                            <p>Total Products</p>
+                            <p>Total Users</p>
+                            <p></p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>

@@ -63,8 +63,27 @@ public function requestTokenGoogle(Request $request) {
     if($emailExists==true){
    $user = User::where('email', $theEmail)->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
+        $userde=$user->id;
+
+    // Check if the user is already logged in on another device
+    $existingDeviceToken = User::where('id', '<>', $user->id)
+                               ->where('device_token', $request->input('device_token'))
+                               ->value('device_token');
+
+    if ($existingDeviceToken) {
+        // If user is already logged in on another device, log them out
+        User::where('device_token', $existingDeviceToken)
+            ->update(['device_token' => null]);
+    }
+
+    // Update user's device token
+    $user->device_token = $request->input('device_token');
+    $user->last_login = now();
+    $user->save();
+        $student = students::where('user_id', $userde)->first();
         return response()->json([
             'token' => $token,
+            'payment' => $student->payment,
             'message' => "successfull",
             "time" => false,
             'user_id' => $user->id,
@@ -74,6 +93,8 @@ public function requestTokenGoogle(Request $request) {
         ]);
     }
     else{
+        $randomId =   rand(1000,9999);
+        $paymentN = 1;
         $current_time = \Carbon\Carbon::now()->toDateTimeString();
         $user = User::create([
             'name' => $theName,
@@ -84,11 +105,14 @@ public function requestTokenGoogle(Request $request) {
         $token = $user->createToken('auth_token')->plainTextToken;
         $student = students::create([
             'user_id' => $user->id,
-            'name' => $user->name
+            'name' => $user->name,
+            'otp' => $randomId,
+            'payment' => 1
         ]);
         // $this->sendSmsNotificaition($request->phone, $randomId);
         return response()->json([
         'token' => $token,
+        'payment' => $paymentN,
         'message' => "successfull",
         "time" => true,
         'user_id' => $user->id,
@@ -117,8 +141,9 @@ public function requestTokenGoogle(Request $request) {
         // Return errors if validation error occur.
         if ($validator->fails()) {
             $errors = $validator->errors();
+            $formatted_error = $errors->first();
             return response()->json([
-                'message' => $errors
+                'message' => $formatted_error
             ], 400);
         }
         // Check if validation pass then create user and auth token. Return the auth token
@@ -135,13 +160,15 @@ public function requestTokenGoogle(Request $request) {
                 'otp' => $randomId,
                 'user_id' => $user->id,
                 'name' => $user->name,
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'payment' => 1  
             ]);
                     //  $this->sendSmsNotificaition($student->phone,$student->otp);
             
             $this->basic_email($randomId,$request->email);
             return response()->json([
             'token' => $token,
+            'payment' => $student->payment,
             'otp' => $randomId,
             'student' => $student->name,
             'message' => "successfull",
@@ -156,7 +183,55 @@ public function requestTokenGoogle(Request $request) {
                 ]);
             }
         }
-    
+        
+        //send otp
+        public function sendOtp(Request $request){
+            $emailExists = User::where('email', $request->email)
+            ->exists();
+            if($emailExists == true){
+            $id = User::where('email', $request->email)->pluck('id')->first();
+            $student = students::where('user_id', $id)->first();
+            $this->basic_email($student->otp,$request->email);
+            return response()->json([
+                'otp' => $student->otp,
+                'success' => true,        
+                ]);
+            }
+            else{
+                return response()->json([
+                    'success' => false,        
+                    ]);
+            }
+        }
+
+         //resend otp
+         public function resedOtp(Request $request){
+            $id = User::where('email', $request->email)->pluck('id')->first();
+            $student = students::where('user_id', $id)->first();
+            $this->basic_email($student->otp,$request->email);
+            return response()->json([
+                'success' => true,        
+                ]);
+        }
+
+        //changePassword
+        public function changePassword(Request $request){
+            try{
+                $change = User::where('email', $request->email)->first();
+            $change->password = Hash::make($request->password);
+            $change->save();
+            return response()->json([
+                'success' => true,        
+                ]);
+            }
+            catch(e){
+                return response()->json([
+                    'success' => false,        
+                    ]);
+            }
+        }
+
+
      //edit profile
      public function editProfile(Request $request,$id){
         try{
@@ -166,7 +241,6 @@ public function requestTokenGoogle(Request $request) {
             $verif->name = $request->name;
             $verif->save();
             return response()->json([
-     
                 'success' => true,        
                 ]);
             }
@@ -206,7 +280,32 @@ public function requestTokenGoogle(Request $request) {
         return response()->json([
      
             'message' => "successfull",
-            'verify' => $request->phone_verified
+            'verify' => $verify->phone_verified
+    
+            ]);
+        }
+
+    }
+
+    //update payment
+    public function updatePayment(Request $request,$id)
+    {
+        //
+        $verify = students::where('user_id', $id)->firstOrFail();
+        $verify->payment = 1;
+        $verify->save();
+        if($verify->payment == 0){
+            return response()->json([
+     
+                'message' => "failed",
+        
+                ]);
+        }
+        else if($verify->payment == 1){
+        return response()->json([
+     
+            'message' => "successfull",
+            'verify' => $verify->payment
     
             ]);
         }
@@ -215,32 +314,78 @@ public function requestTokenGoogle(Request $request) {
 
     //login
     public function login(Request $request)
-    {
-
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'message' => 'Invalid login details'
-            ], 401);
-        }
-        $user = User::where('email', $request['email'])->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
-        $userde=auth()->user()->id;
-        $student = students::where('user_id', $userde)->first();
-        if(auth()->user()->phone_verified == 0){
-            $this->basic_email($student->otp,auth()->user()->email);
-    }
-    else{
-
-    }
+{
+    if (!Auth::attempt($request->only('email', 'password'))) {
         return response()->json([
-            'otp' => $student->otp,
-            'token' => $token,
-            'message' => "successfull",
-            'user_id' => auth()->user()->id,
-            'user_name' => auth()->user()->name,
-            'phone_verified' => auth()->user()->phone_verified,
-            'user_email' => auth()->user()->email
-        ]);
-    
+            'message' => 'Invalid login details'
+        ], 400);
     }
+
+    $user = User::where('email', $request['email'])->firstOrFail();
+    $token = $user->createToken('auth_token')->plainTextToken;
+    $userde = auth()->user()->id;
+
+    // Check if the user is already logged in on another device
+    $existingDeviceToken = User::where('id', '<>', $user->id)
+                               ->where('device_token', $request->input('device_token'))
+                               ->value('device_token');
+
+    if ($existingDeviceToken) {
+        // If user is already logged in on another device, log them out
+        User::where('device_token', $existingDeviceToken)
+            ->update(['device_token' => null]);
+    }
+
+    // Update user's device token
+    $user->device_token = $request->input('device_token');
+    $user->last_login = now();
+    $user->save();
+
+    $student = students::where('user_id', $userde)->first();
+    if (auth()->user()->phone_verified == 0) {
+        $this->basic_email($student->otp, auth()->user()->email);
+    }
+
+    return response()->json([
+        'payment' => $student->payment,
+        'otp' => $student->otp,
+        'token' => $token,
+        'message' => "successfull",
+        'user_id' => auth()->user()->id,
+        'user_name' => auth()->user()->name,
+        'phone_verified' => auth()->user()->phone_verified,
+        'user_email' => auth()->user()->email
+    ]);
+}
+
+    // public function login(Request $request)
+    // {
+
+    //     if (!Auth::attempt($request->only('email', 'password'))) {
+    //         return response()->json([
+    //             'message' => 'Invalid login details'
+    //         ], 400);
+    //     }
+    //     $user = User::where('email', $request['email'])->firstOrFail();
+    //     $token = $user->createToken('auth_token')->plainTextToken;
+    //     $userde=auth()->user()->id;
+    //     $student = students::where('user_id', $userde)->first();
+    //     if(auth()->user()->phone_verified == 0){
+    //         $this->basic_email($student->otp,auth()->user()->email);
+    // }
+    // else{
+
+    // }
+    //     return response()->json([
+    //         'payment' => $student->payment,
+    //         'otp' => $student->otp,
+    //         'token' => $token,
+    //         'message' => "successfull",
+    //         'user_id' => auth()->user()->id,
+    //         'user_name' => auth()->user()->name,
+    //         'phone_verified' => auth()->user()->phone_verified,
+    //         'user_email' => auth()->user()->email
+    //     ]);
+    
+    // }
 }

@@ -19,5 +19,9 @@ class subjects extends Model
     {
         return $this->belongsTo(semesters::class);
     }
+    public function chapters()
+{
+    return $this->hasMany(chapters::class, 'sub_id');
+}
 }
 

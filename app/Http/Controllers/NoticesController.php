@@ -75,7 +75,7 @@ class NoticesController extends BackendBaseController
         ];
         $fields = json_encode ($data);
         $headers = array (
-            'Authorization: key=' . "AAAA9p_4Hi4:APA91bEAkWt7B1JbKmfX9X3om1kNSzW9mLTf1tlUU7qmtfkXopJCrz5490We6cqT0lhDcUMv67pAu3bUS8zE27Uwuxrp5sVLZECAcumjabKFGW321qnO-WRF-nbnkyHcp_NGXeU6SFj3",
+            'Authorization: key=' . "AAAAMZvPU2s:APA91bEY5GlYz7Ok21J5z4x1Ph0wmZ3DX4PuKupWURog2yfp8J6s8_VS9e_iPfOQQYxW6vjrxVPnvDtTBToIQ6w_KBDsqLfOwM1PEOetXLuYV4JacTehVPyT7BXiHhNfUca0E6OLVIg2",
             'Content-Type: application/json'
         );
         $ch = curl_init ();

@@ -59,17 +59,44 @@ class CollegequestionController extends BackendBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     public function collegeYear(){
+        $data = collegeyears::all();
+        return $data;
+     }
+
+     //college questions
+     public function showquestions(Request $request, $id, $year_id){
+        $data = collegequestions::where('sub_id', $id,)->where('collegeyear_id', $year_id)->with('Qyear')->get();
+        return $data;
+    }
     public function store(Request $request)
     {
-        $file = $request->file('image_file');
-        if ($request->hasFile("image_file")) {
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images/collegequestion/'), $fileName);
-            $request->request->add(['image' => $fileName]);
-        }
+        // $file = $request->file('image_file');
+        // if ($request->hasFile("image_file")) {
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     $file->move(public_path('uploads/images/syllabus/'), $fileName);
+        //     $request->request->add(['image' => $fileName]);
+        // }
 
-        $data['row']=$this->model->create($request->all());
+        $data['row']=$request->all();
         if ($data['row']){
+             //for multiple image upload
+             $imageFiles = $request->file('product_image');
+             $imageArray['sem_id'] = $request->sem_id;
+             $imageArray['sub_id'] = $request->sub_id;
+             $imageArray['collegeyear_id'] = $request->collegeyear_id;
+
+ 
+             for ($i = 0; $i < count($imageFiles); $i++){
+                 $image      = $imageFiles[$i];
+                 $image_name = rand(6785, 9814).'_'.$image->getClientOriginalName();
+                  $image->move(public_path('uploads/images/collegequestion/'), $image_name);
+                 // $image->move($this->image_path, $image_name);
+                 $imageArray['image'] = $image_name;
+                 $imageArray['status'] = 1;
+                 collegequestions::create($imageArray);
+             }
             request()->session()->flash('success',$this->panel . 'Created Successfully');
         }else{
             request()->session()->flash('error',$this->panel . 'Creation Failed');

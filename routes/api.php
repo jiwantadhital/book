@@ -23,6 +23,7 @@ Route::post('/register', [\App\Http\Controllers\API\AuthController::class,'regis
 Route::post('/login', [\App\Http\Controllers\API\AuthController::class,'login']);
 Route::get('/send-sms-notification', [\App\Http\Controllers\NotificationController::class, 'sendSmsNotificaition']);
 Route::put('/user/{id}',[\App\Http\Controllers\API\AuthController::class,'updatePhone']);
+Route::put('/payment/{id}',[\App\Http\Controllers\API\AuthController::class,'updatePayment']);
 
 // google login
 Route::post('/requestTokenGoogle',[\App\Http\Controllers\API\AuthController::class,'requestTokenGoogle']);
@@ -35,15 +36,21 @@ Route::put('/update/profile/{id}',[\App\Http\Controllers\API\AuthController::cla
 //Route::Post('notice_save',[\App\Http\Controllers\API\APIController::class,'notice_save']);
 //email
 Route::get('/sendemail', [\App\Http\Controllers\API\AuthController::class, 'basic_email']);
+Route::post('/forgot/sendOtp', [\App\Http\Controllers\API\AuthController::class, 'sendOtp']);
+Route::post('/forgot/resendOtp', [\App\Http\Controllers\API\AuthController::class, 'resedOtp']);
+Route::post('/changePassword', [\App\Http\Controllers\API\AuthController::class, 'changePassword']);
 
 
-//notices
-Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
+ //notices
+ Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
 
-Route::get('/notices/today', [\App\Http\Controllers\backend\SemesterController::class, 'todayNotices']);
+ Route::get('/notices/today', [\App\Http\Controllers\backend\SemesterController::class, 'todayNotices']);
+ 
+ Route::get('/notices/thisWeek', [\App\Http\Controllers\backend\SemesterController::class, 'thisWeek']);
+ 
 
-Route::get('/notices/thisWeek', [\App\Http\Controllers\backend\SemesterController::class, 'thisWeek']);
-
+Route::group(['middleware'=>'auth:sanctum'],function(){
+   
 
 //colleges
 Route::get('/institutes/showAll', [\App\Http\Controllers\backend\CollegeController::class, 'showAll']);
@@ -79,10 +86,13 @@ Route::get('/notes/showAll/{id}', [\App\Http\Controllers\backend\NotesController
 Route::get('/question/showAll/{id}/{year_id}', [\App\Http\Controllers\backend\QuestionbankController::class, 'showAll']);
 //year
 Route::get('/questionyear/showAll', [\App\Http\Controllers\backend\QuestionyearController::class, 'showAll']);
+
+//collegeyears
+Route::get('/collegeYear/showAll', [\App\Http\Controllers\backend\CollegequestionController::class, 'collegeYear']);
+//college questions
+Route::get('/collegequestion/showAll/{id}/{collegeyear_id}', [\App\Http\Controllers\backend\CollegequestionController::class, 'showquestions']);
 //semester
 Route::get('/semesters/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAll']);
 //news
 Route::get('/news/showAll', [\App\Http\Controllers\backend\NewsController::class, 'showAll']);
-
-Route::group(['middleware'=>'auth:sanctum'],function(){
 });

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('otp')->nullable();
+            $table->boolean('payment')->default(0);
+            $table->timestamp('payment_at')->default(now());
             $table->unsignedBigInteger('user_id');
             $table->double('phone')->nullable();
             $table->unsignedBigInteger('college_id')->nullable();

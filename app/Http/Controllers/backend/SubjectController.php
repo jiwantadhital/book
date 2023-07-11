@@ -74,11 +74,11 @@ class SubjectController extends BackendBaseController
 
     }
     public function showAll(Request $request, $id){
-        $data = subjects::where('sem_id', $id)->get();
+        $data = subjects::where('sem_id', $id)->withCount('chapters')->get();
         return $data;
     }
     public function showSubjects(Request $request){
-        $data = subjects::with('Semester')->get();
+        $data = subjects::with('Semester')->withCount('chapters')->get();
         return $data;
     }
 

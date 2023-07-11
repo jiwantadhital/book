@@ -21,7 +21,7 @@
 
         <div class="card-body">
             <div class="form-group row">
-                {!! Form::label('sem_id', 'Semester: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+                {!! Form::label('sem_id', 'Semester: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false) !!}
                 <div class="col-sm-10">
                     {!! Form::select('sem_id', $data['sem'], null,['class' => 'form-control','placeholder' => 'Select Semester','id'=>'semester',]) !!}
                     @error('sem_id')
@@ -32,7 +32,7 @@
 
 
             <div class="form-group row">
-                {!! Form::label('sub_id', 'Subject: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+                {!! Form::label('sub_id', 'Subject: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false) !!}
                 <div class="col-sm-10">
                     <select class="form-control  formselect required"  placeholder="Select Sub Category" name="sub_id" id="subject"></select>
                     @error('sub_id')
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                {!! Form::label('chapter_id', 'Chapter: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+                {!! Form::label('chapter_id', 'Chapter: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false) !!}
                 <div class="col-sm-10">
                     <select class="form-control  formselect required"  placeholder="Select Chapter" name="chapter_id" id="chapter"></select>
                     @error('chapter_id')
@@ -50,9 +50,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                {!! Form::label('image','File: <span ></span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+                {!! Form::label('image','File: <span ></span>',['class' => 'col-sm-2 col-form-label'],false) !!}
                 <div class="col-sm-10">
-                    {!! Form::file('image', [ 'class'=>'form-control','id'=>'image_file','name'=>'image_file']); !!}
+                    {!! Form::file('image', [ 'class'=>'form-control','id'=>'image_file','name'=>'image_file']) !!}
                     @error('image')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
@@ -65,7 +65,7 @@
             <textarea name="notes" id="summernote" cols="0" rows="0" hidden="true"></textarea>
 
             <div  class="document-editor">
-       {!! Form::label('notes','Notes: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false); !!}
+       {!! Form::label('notes','Notes: <span class="required">*</span>',['class' => 'col-sm-2 col-form-label'],false) !!}
     <div class="document-editor__toolbar"></div>
     <div class="document-editor__editable-container">
 
