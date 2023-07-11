@@ -36,7 +36,7 @@ Route::group(['prefix'=>'/admin','as'=>'admin.'],function(){
     // Route::post('upload', [NoticesController::class,'uploadimage'])->name('ckeditor.upload');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('.home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('notice',NoticesController::class);
 Route::resource('news',NewsController::class);
 Route::resource('questionyear',QuestionyearController::class);
