@@ -43,6 +43,7 @@ Route::post('/changePassword', [\App\Http\Controllers\API\AuthController::class,
 
  //notices
  Route::get('/notices/showAll', [\App\Http\Controllers\backend\SemesterController::class, 'showAllNotices']);
+ Route::get('/notices/recent', [\App\Http\Controllers\backend\SemesterController::class, 'recentNotices']);
 
  Route::get('/notices/today', [\App\Http\Controllers\backend\SemesterController::class, 'todayNotices']);
  

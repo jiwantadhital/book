@@ -52,7 +52,7 @@ class CommentController extends BackendBaseController
      */
     public function getComment(Request $request){
         try{
-        $comments = comments::create([
+         comments::create([
             'comments_ratting' => $request->rating,
             'description' => $request->desc,
             'user_id' => $request->id,

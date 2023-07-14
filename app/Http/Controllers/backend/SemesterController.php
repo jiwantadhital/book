@@ -40,7 +40,19 @@ class SemesterController extends BackendBaseController
         return $data;
     }
     public function showAllNotices(Request $request){
-        $data = notices::orderBy('created_at', 'DESC')->paginate(8);
+        $data['notices'] = notices::orderBy('created_at', 'DESC')->paginate(8);
+        $data['totalpages'] = $data['notices']->lastPage();
+        return $data;
+    }
+    public function recentNotices(Request $request){
+        $data = notices::all(); ;
+
+        if ($data->count() < 3) {
+                   $data = notices::all(); 
+        }
+        else{
+            $data = notices::orderBy('created_at', 'DESC')->take(3)->get();
+        }
         return $data;
     }
     public function todayNotices(Request $request){
