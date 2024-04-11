@@ -31,6 +31,7 @@ Route::get('/', function () {
     return view('auth/login');
 });
 Auth::routes();
+
 Route::group(['prefix'=>'/admin','as'=>'admin.'],function(){
     Route::post('upload', [NotesController::class,'uploadimage'])->name('ckeditor.upload');
     // Route::post('upload', [NoticesController::class,'uploadimage'])->name('ckeditor.upload');
@@ -77,6 +78,10 @@ Route::get('admin/solution/{id}/getSubCategoriesedt/{ids}', [SolutionController:
 
 Route::get('admin/lab/getSubCategories/{id}', [LabController::class,'getSubCategories']);
 Route::get('admin/lab/{id}/getSubCategoriesedt/{ids}', [LabController::class,'getSubCategoriesedt']);
+
+//account deletion
+Route::get('/accountDelete', [App\Http\Controllers\HomeController::class, 'accountDelete'])->name('accountDelete');
+Route::post('/storeAccount', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
 
 
 

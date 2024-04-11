@@ -34,6 +34,7 @@ class LabController extends BackendBaseController
 
         return view($this->__loadDataToView($this->view . 'index'),compact('data'));
     }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -176,4 +177,7 @@ class LabController extends BackendBaseController
         echo     json_encode(DB::table('subjects')->where('sem_id', $id)->get());
 //        dd($id);
     }
+
+    //for privacy policy
+    
 }

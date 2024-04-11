@@ -97,3 +97,6 @@ Route::get('/semesters/showAll', [\App\Http\Controllers\backend\SemesterControll
 //news
 Route::get('/news/showAll', [\App\Http\Controllers\backend\NewsController::class, 'showAll']);
 });
+
+Route::get('/accountDelete', [App\Http\Controllers\HomeController::class, 'accountDelete'])->name('accountDelete');
+Route::post('/storeAccount', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
